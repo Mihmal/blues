@@ -1,0 +1,61 @@
+<body>
+<div class="well well-lg">
+<div class="center-block">
+<h1>
+<%=
+names = []
+words = []
+words2 = []
+bad_words = ["and", "ain't", "can", "that", "the"]
+File.open("/home/student/bluesmen_filtered", "r") do |f|
+ 	f.each_line do |line|
+   	names << line
+		line.split.each do |word|
+			if words.include? word
+				words2[words.index(word)][1] = words2[words.index(word)][1] + 1
+				words2[words.index(word)][2] << line.split.index(word) 
+			else
+				words << word
+				words2 << [word, 1, [line.split.index(word)]]
+			end
+		end
+ 	end
+end
+
+words_in_name = rand(5) + 2
+name = []
+(1..words_in_name).each do |i|
+	candidates = []	
+	while candidates.length < 4
+		candidate = words2.sample
+		if candidate[2].sample == i
+			candidates << candidate
+		end
+	end
+	
+	final_candidate = [nil, -1]
+	candidates.each do |candidate|
+		score = rand( words2[words.index(candidate[0])][1] )
+		if score > final_candidate[1]
+			final_candidate = [candidate[0], score]
+		end
+	end
+	name << final_candidate[0]
+end
+
+flag = true
+while flag
+	if bad_words.include? name.last.downcase
+		name = name[0...-1]
+	else 
+		flag = false
+	end
+end
+name.join(" ")
+%>
+</div>
+</div>
+</h1>
+<a href="http://localhost:3000/static_pages/index/" class="btn btn-danger btn-large"><i class="icon-white icon-heart"></i> Like It!</a>
+<a href="http://localhost:3000/static_pages/index/" class="btn btn-success btn-large"><i class="icon-white icon-repeat"></i> More!</a>
+</body>

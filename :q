@@ -1,0 +1,45 @@
+<h1>;Random bluesmen</h1>
+<h3>Reload the page to get some new ones!</h3>
+<p>
+<%=
+names = []
+words = []
+words2 = []
+File.open("/home/student/bluesmen_filtered", "r") do |f|
+ 	f.each_line do |line|
+   	names << line
+		line.split.each do |word|
+			if words.include? word
+				words2[words.index(word)][1] = words2[words.index(word)][1] + 1
+				words2[words.index(word)][2] << line.split.index(word) 
+			else
+				words << word
+				words2 << [word, 1, [line.split.index(word)]]
+			end
+		end
+ 	end
+end
+
+words_in_name = rand(5) + 2
+name = ""
+(1..words_in_name).each do |i|
+	candidates = []	
+	while candidates.length < 4
+		candidate = words2.sample
+		if candidate[2].sample == i
+			candidates << candidate
+		end
+	end
+	
+	final_candidate = [nil, -1]
+	candidates.each do |candidate|
+		score = rand( words2[words.index(candidate[0])][1] )
+		if score > final_candidate[1]
+			final_candidate = [candidate[0], score]
+		end
+	end
+	name += final_candidate[0] + " "
+end
+return name
+%>
+</p>
