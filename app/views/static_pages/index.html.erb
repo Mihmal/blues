@@ -7,7 +7,7 @@ names = []
 words = []
 words2 = []
 bad_words = ["and", "ain't", "can", "that", "the"]
-File.open("/home/student/bluesmen_filtered", "r") do |f|
+File.open("bluesmen_filtered", "r") do |f|
  	f.each_line do |line|
    	names << line
 		line.split.each do |word|
