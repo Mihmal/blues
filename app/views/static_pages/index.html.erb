@@ -8,7 +8,7 @@ words = []
 words2 = []
 bad_words = ["and", "ain't", "can", "that", "the"]
 #File.open("bluesmen_filtered", "r") do |f|
- 	["Blind Joe", "Young and Tender Josh", "Blind Bob from Missisipi and Brother David"] do |line|
+ 	["Blind Joe", "Young and Tender Josh", "Blind Bob from Missisipi and Brother David"].each() do |line|
    	names << line
 		line.split.each do |word|
 			if words.include? word
